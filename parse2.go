@@ -15,6 +15,18 @@ func main() {
 	var allRecords []Record
 
 	input := []byte(`[
+    {
+      "app": "name1",
+      "namespace": "ns"
+    },
+    {
+      "app": "name2",
+      "namespace": "ns"
+    },
+    {
+      "app": "infradocs-tsp-qa",
+      "namespace": "nozomi"
+    },
   ]`)
 
 	var tmpRecords []Record
