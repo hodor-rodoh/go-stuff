@@ -31,6 +31,7 @@ func main() {
 	var metadata output
 
 	json.Unmarshal(byteValue, &metadata)
+	// data should be printed but I don't think its Unmarshalling properly
   fmt.Println(metadata.output)
 
 	for i := 0; i < len(metadata.output); i++ {
