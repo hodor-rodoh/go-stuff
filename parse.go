@@ -23,6 +23,8 @@ func main() {
 		fmt.Println(err)
 	}
 
+	fmt.Println("opened dat file homes")
+
 	defer jsonFile.Close()
 
 	byteValue, _ := ioutil.ReadAll(jsonFile)
