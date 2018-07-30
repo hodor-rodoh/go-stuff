@@ -10,7 +10,7 @@ import (
 	"os"
 	//"regexp"
 )
-// go get go get k8s.io/client-go/*version#
+// go get k8s.io/client-go/*version#
 // kubectl --context am562-kube0 get ing -n nozomi -o json
 
 // type output struct {
