@@ -32,7 +32,7 @@ func main() {
 
 	json.Unmarshal(byteValue, &metadata)
 	// data should be printed but I don't think its Unmarshalling properly
-	fmt.Println(metadata.output)
+	fmt.Println(metadata.output) // output is emtpy []
 
 	for i := 0; i < len(metadata.output); i++ {
 		fmt.Println(metadata.output[i].Namespace + " " + metadata.output[i].App)
