@@ -8,7 +8,10 @@ import (
 	"fmt"
 	"io/ioutil"
 	"os"
+	//"regexp"
 )
+// go get go get k8s.io/client-go/*version#
+// kubectl --context am562-kube0 get ing -n nozomi -o json
 
 // type output struct {
 //   output []metadata
@@ -25,7 +28,7 @@ func main() {
 		fmt.Println(err)
 	}
 
-	fmt.Println("opened dat file homes")
+	fmt.Println("opened dat file homes!")
 
 	defer jsonFile.Close()
 
@@ -34,11 +37,12 @@ func main() {
 	var info []metadata
 
 	json.Unmarshal(([]byte(byteValue)), &info)
-	// data should be printed but I don't think its Unmarshalling properly
-	fmt.Println(info) // output is emtpy []
+	// fmt.Println(info)
 
-	// for i := 0; i < len(metadata.output); i++ {
-	// 	fmt.Println(metadata.output[i].Namespace + " " + metadata.output[i].App)
-	// }
+	for i := 0; i < len(info); i++ {
+		// fmt.Println(info[i].App + " " + info[i].Namespace)
+		// add a regexp.MatchString for .App (`telematicsct`,info)
+		fmt.Println(info[i])
+	}
 
 }
