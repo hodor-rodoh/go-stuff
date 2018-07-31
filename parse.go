@@ -18,7 +18,7 @@ type metadata struct { //struct for app and namespace for outputs
 	Namespace string //`json:"namespace"`
 }
 
-type tinder struct { //struct for my regexp matches
+type tinder struct { //struct for my regexp matches?
 	App 			string
 	Namespace string
 }
@@ -47,8 +47,9 @@ func main() {
 		match := (info[i].App + " " + info[i].Namespace)
 		// fmt.Println(match)
 
-		re := regexp.MustCompile("-telematicsct") // must contain -telematicsct
+		re := regexp.MustCompile("-telematicsct") // contains -telematicsct
 		fmt.Printf("%q\n", re.FindStringSubmatch(match)) // finds telematicsct in a substring and returns
-
+		matches := re.FindStringSubmatch(match)
+		fmt.Println(matches) 
 	}
 }
