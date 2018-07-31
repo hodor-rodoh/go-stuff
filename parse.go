@@ -50,6 +50,6 @@ func main() {
 		re := regexp.MustCompile("-telematicsct") // contains -telematicsct
 		fmt.Printf("%q\n", re.FindStringSubmatch(match)) // finds telematicsct in a substring and returns
 		matches := re.FindStringSubmatch(match)
-		fmt.Println(matches) 
+		fmt.Println(matches)
 	}
 }
