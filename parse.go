@@ -14,38 +14,26 @@ type metadata struct { //struct for app and namespace for outputs
 	Namespace string //`json:"namespace"`
 }
 
-type tinder struct { //struct for my regexp matches?
-	App 			string
-	Namespace string
-}
-
 func main() {
 	jsonFile, err := os.Open("output.json") 	// opens output.json file prints error with err
 	if err != nil {
 		fmt.Println(err)
 	}
 
-	fmt.Println("opened dat file homes!") 	// confirmation that file is opened
-
 	defer jsonFile.Close() 	//close file
 
 	byteValue, _ := ioutil.ReadAll(jsonFile)
 
 	var info []metadata
+	var results []metadata
 
 	json.Unmarshal(([]byte(byteValue)), &info) // Unmarshal jsonFile to parse and shit
-	// fmt.Println(info)
 
-	for i := 0; i < len(info); i++ { // loop through all the stuff
-		// fmt.Println(info[i].App + " " + info[i].Namespace)
-		// fmt.Println(info[i])
-
-		match := (info[i].App + " " + info[i].Namespace)
-		// fmt.Println(match)
-
-		re := regexp.MustCompile("-telematicsct") // contains -telematicsct
-		fmt.Printf("%q\n", re.FindStringSubmatch(match)) // finds telematicsct in a substring and returns
-		matches := re.FindStringSubmatch(match)
-		fmt.Println(matches)
+	for _, app := range info { // loop through all the stuff
+		match, _ := regexp.MatchString("telematicsct", app.App)
+		if match {
+			results = append(results, app)
+			fmt.Printf("kubectl --namespace %s delete ingress/%s \n", app.Namespace, app.App)
+		}
 	}
 }
