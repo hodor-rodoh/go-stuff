@@ -11,8 +11,8 @@ import (
 	"strings"
 )
 // go get k8s.io/client-go/*version#
-// kubectl --context am562-kube0 get ing -n nozomi -o json | jq -r '.items[] | { app: .metadata.name, namespace: .metadata.namespace }' > output.txt
-// kubectl --context am562-kube0 get ingress -o=custom-columns=NAME:.metadata.name,NAMESPACE:.metadata.namespace -n nozomi | grep telematicsct
+// kubectl --context am562-kube0 get ing -n nozomi -o json | jq -r '[.items[] | { app: .metadata.name, namespace: .metadata.namespace }]' > output.json
+// kubectl --context am562-kube0 get secrets -n nozomi -o json | jq -r '[.items[] | { app: .metadata.name, namespace: .metadata.namespace }]' > output.json
 
 type metadata struct { //struct for app and namespace for outputs
 	App       string //`json:"app"`
@@ -39,8 +39,10 @@ func main() {
 		match, _ := regexp.MatchString("telematicsct", app.App)
 		if match {
 			results = append(results, app)
-			// fmt.Printf("kubectl --namespace %s delete ingress/%s \n", app.Namespace, app.App)
-			hodor := fmt.Sprintf("kubectl --context am562-kube0 get ingress %s --namespace %s", app.App, app.Namespace)
+			// hodor := fmt.Sprintf("kubectl --context am562-kube0 get ingress %s --namespace %s", app.App, app.Namespace) // to get ingress for testing
+			// hodor := fmt.Sprintf("kubectl --context am562-kube0 --namespace %s delete ingress/%s \n", app.Namespace, app.App) // deleting ingress
+			hodor := fmt.Sprintf("kubectl --context am562-kube0 get secrets %s --namespace %s", app.App, app.Namespace) // to get secrets for testing
+			// hodor := fmt.Sprintf("kubectl --context am562-kube0 --namespace %s delete secret/%s \n", app.Namespace, app.App) // deleting ingress
 			fmt.Println(hodor)
 			tokens := strings.Fields(hodor)
 			executable := tokens[0]
@@ -55,3 +57,4 @@ func main() {
 		}
 	}
 }
+
