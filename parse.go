@@ -5,7 +5,10 @@ import (
 	"fmt"
 	"io/ioutil"
 	"os"
+	"os/exec"
+	"log"
 	"regexp"
+	"strings"
 )
 // go get k8s.io/client-go/*version#
 
@@ -14,6 +17,7 @@ type metadata struct { //struct for app and namespace for outputs
 	Namespace string //`json:"namespace"`
 }
 
+// todo break this shit out into different functions
 func main() {
 	jsonFile, err := os.Open("output.json") 	// opens output.json file prints error with err
 	if err != nil {
@@ -33,7 +37,19 @@ func main() {
 		match, _ := regexp.MatchString("telematicsct", app.App)
 		if match {
 			results = append(results, app)
-			fmt.Printf("kubectl --namespace %s delete ingress/%s \n", app.Namespace, app.App)
+			// fmt.Printf("kubectl --namespace %s delete ingress/%s \n", app.Namespace, app.App)
+			hodor := fmt.Sprintf("kubectl --context am562-kube0 get ingress %s --namespace %s", app.App, app.Namespace)
+			fmt.Println(hodor)
+			tokens := strings.Fields(hodor)
+			executable := tokens[0]
+			args := tokens[1:len(tokens)]
+			cmd := exec.Command(executable, args...)
+			cmd.Stdout = os.Stdout
+			cmd.Stderr = os.Stderr
+			err := cmd.Run()
+			if err != nil {
+				log.Fatal(err)
+			}
 		}
 	}
 }
