@@ -11,6 +11,8 @@ import (
 	"strings"
 )
 // go get k8s.io/client-go/*version#
+// kubectl --context am562-kube0 get ing -n nozomi -o json | jq -r '.items[] | { app: .metadata.name, namespace: .metadata.namespace }' > output.txt
+// kubectl --context am562-kube0 get ingress -o=custom-columns=NAME:.metadata.name,NAMESPACE:.metadata.namespace -n nozomi | grep telematicsct
 
 type metadata struct { //struct for app and namespace for outputs
 	App       string //`json:"app"`
