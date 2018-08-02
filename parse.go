@@ -38,10 +38,10 @@ func main() {
 		match, _ := regexp.MatchString("telematicsct", app.App)
 		if match {
 			results = append(results, app)
-			// hodor := fmt.Sprintf("kubectl --context am360-kube0 get ingress %s --namespace %s", app.App, app.Namespace)
+			hodor := fmt.Sprintf("kubectl --context am360-kube0 get ingress %s --namespace %s", app.App, app.Namespace)
 			// hodor := fmt.Sprintf("kubectl --context am360-kube0 --namespace %s delete ingress/%s \n", app.Namespace, app.App)
 			// hodor := fmt.Sprintf("kubectl --context am360-kube0 get secrets %s --namespace %s", app.App, app.Namespace)
-			hodor := fmt.Sprintf("kubectl --context am360-kube0 --namespace %s delete secret/%s \n", app.Namespace, app.App)
+			// hodor := fmt.Sprintf("kubectl --context am360-kube0 --namespace %s delete secret/%s \n", app.Namespace, app.App)
 			fmt.Println(hodor)
 			tokens := strings.Fields(hodor)
 			executable := tokens[0]
@@ -56,4 +56,3 @@ func main() {
 		}
 	}
 }
-
