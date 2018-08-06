@@ -7,10 +7,10 @@ BIN_DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 
 # kubectl config get-contexts
 #
-# kubectl --context am160-kube0 get ingress -n nozomi -o json | \
+# kubectl --context *replace* get ingress --all-namespaces -o json | \
 # jq -r '[.items[] | { app: .metadata.name, namespace: .metadata.namespace }]' > output.json
 #
-# kubectl --context am160-kube0 get secrets -n nozomi -o json | \
+# kubectl --context *replace* get secrets --all-namespaces -o json | \
 # jq -r '[.items[] | { app: .metadata.name, namespace: .metadata.namespace }]' > output.json
 
 command_output() {
@@ -20,35 +20,35 @@ export KUBECONFIG=~/.kube/config2
   while :; do
     case $1 in
       dev_ingress|dev_ing)
-        kubectl --context am560-kube0 get ingress -n nozomi -o json | \
+        kubectl --context *replace* get ingress --all-namespaces -o json | \
         jq -r '[.items[] | { app: .metadata.name, namespace: .metadata.namespace }]' > output.json
         ;;
       dev_secrets|dev_sec)
-        kubectl --context am560-kube0 get secrets -n nozomi -o json | \
+        kubectl --context *replace* get secrets --all-namespaces -o json | \
         jq -r '[.items[] | { app: .metadata.name, namespace: .metadata.namespace }]' > output.json
         ;;
       qa_ingress|qa_ing)
-        kubectl --context am562-kube0 get ingress -n nozomi -o json | \
+        kubectl --context *replace* get ingress --all-namespaces -o json | \
         jq -r '[.items[] | { app: .metadata.name, namespace: .metadata.namespace }]' > output.json
         ;;
       qa_secrets|qa_sec)
-        kubectl --context am562-kube0 get secrets -n nozomi -o json | \
+        kubectl --context *replace* get secrets --all-namespaces -o json | \
         jq -r '[.items[] | { app: .metadata.name, namespace: .metadata.namespace }]' > output.json
         ;;
       stg_ingress|stg_ing)
-        kubectl --context am360-kube0 get ingress -n nozomi -o json | \
+        kubectl --context *replace* get ingress --all-namespaces -o json | \
         jq -r '[.items[] | { app: .metadata.name, namespace: .metadata.namespace }]' > output.json
         ;;
       stg_secrets|stg_sec)
-        kubectl --context am360-kube0 get secrets -n nozomi -o json | \
+        kubectl --context *replace* get secrets --all-namespaces -o json | \
         jq -r '[.items[] | { app: .metadata.name, namespace: .metadata.namespace }]' > output.json
         ;;
       prod_ingress|prd_ing)
-        kubectl --context am160-kube0 get ingress -n nozomi -o json | \
+        kubectl --context *replace* get ingress --all-namespaces -o json | \
         jq -r '[.items[] | { app: .metadata.name, namespace: .metadata.namespace }]' > output.json
         ;;
       prod_secrets|prd_sec)
-        kubectl --context am160-kube0 get secrets -n nozomi -o json | \
+        kubectl --context *replace* get secrets --all-namespaces -o json | \
         jq -r '[.items[] | { app: .metadata.name, namespace: .metadata.namespace }]' > output.json
         ;;
     esac
@@ -96,6 +96,6 @@ main() {
   done
 }
 
-go run parse.go
+# go run parse.go
 
 main "$@"

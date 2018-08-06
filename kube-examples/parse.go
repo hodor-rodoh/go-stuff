@@ -11,8 +11,8 @@ import (
 	"strings"
 )
 
-// kubectl --context am360-kube0 get ing --all-namespaces -o json | jq -r '[.items[] | { app: .metadata.name, namespace: .metadata.namespace }]' > output.json
-// kubectl --context am360-kube0 get secrets --all-namespaces -o json | jq -r '[.items[] | { app: .metadata.name, namespace: .metadata.namespace }]' > output.json
+// kubectl --context *replace* get ing --all-namespaces -o json | jq -r '[.items[] | { app: .metadata.name, namespace: .metadata.namespace }]' > output.json
+// kubectl --context *replace* get secrets --all-namespaces -o json | jq -r '[.items[] | { app: .metadata.name, namespace: .metadata.namespace }]' > output.json
 
 type metadata struct {
 	App       string
@@ -20,6 +20,9 @@ type metadata struct {
 }
 
 func main() {
+	var info []metadata
+	var results []metadata
+
 	jsonFile, err := os.Open("output.json")
 	if err != nil {
 		fmt.Println(err)
@@ -29,19 +32,16 @@ func main() {
 
 	byteValue, _ := ioutil.ReadAll(jsonFile)
 
-	var info []metadata
-	var results []metadata
-
 	json.Unmarshal(([]byte(byteValue)), &info)
 
 	for _, app := range info {
 		match, _ := regexp.MatchString("telematicsct", app.App)
 		if match {
 			results = append(results, app)
-			hodor := fmt.Sprintf("kubectl --context am160-kube0 get ingress %s --namespace %s", app.App, app.Namespace)
-			// hodor := fmt.Sprintf("kubectl --context am160-kube0 --namespace %s delete ingress/%s \n", app.Namespace, app.App)
-			// hodor := fmt.Sprintf("kubectl --context am160-kube0 get secrets %s --namespace %s", app.App, app.Namespace)
-			// hodor := fmt.Sprintf("kubectl --context am160-kube0 --namespace %s delete secret/%s \n", app.Namespace, app.App)
+			hodor := fmt.Sprintf("kubectl --context *replace* get ingress %s --namespace %s", app.App, app.Namespace)
+			// hodor := fmt.Sprintf("kubectl --context *replace* --namespace %s delete ingress/%s \n", app.Namespace, app.App)
+			// hodor := fmt.Sprintf("kubectl --context *replace* get secrets %s --namespace %s", app.App, app.Namespace)
+			// hodor := fmt.Sprintf("kubectl --context *replace* --namespace %s delete secret/%s \n", app.Namespace, app.App)
 			fmt.Println(hodor)
 			tokens := strings.Fields(hodor)
 			executable := tokens[0]
